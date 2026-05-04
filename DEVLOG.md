@@ -2,6 +2,32 @@
 
 <!-- markdownlint-disable -->
 
+## Session 84 — 2026-05-04 (Luxury gold design system + GitHub push)
+
+**Trigger:** User yêu cầu: (1) Apply glass buttons tất cả variants (dark + light mode); (2) Marquee white bg, black text, tech icons; (3) Luxury gold gradient headings; (4) Push code to GitHub
+
+### Delivered
+- **`src/app/globals.css`** — Added `.btn-liquid-glass` full CSS (dark mode: gradient bg `rgba(201,169,97,0.22)` + gold text `#FFE59A→#C9A961→#7A5A10` + inset shadows; light mode: cream bg `rgba(255,248,228,0.88)` + dark border `#FFDC64→#C9A961→#8B6500` + dark text icons `#111111`). Added `.luxury-heading` class with gold gradient `#FFE59A→#C9A961→#8B6500` (dark) | `#C9A961→#8B6500→#4A3300` (light).
+- **`src/components/ui/PillCTA.tsx`** — Refactored: removed ArrowUpRight icon + isGlass branching; all 4 variants (dark/light/outline/glass) → single `btn-liquid-glass` class; unified icon+text structure, no trailing arrow.
+- **`src/components/ui/MarqueeText.tsx`** — Changed `phrase: string` → `items: MarqueeItem[]` (array with icon + text); flexible rendering per locale.
+- **`src/components/sections/MarqueeBand.tsx`** — Redesigned: white bg (`bg-paper`), black text (`text-ink`), border-y dividers; updated icon set to modern tech aesthetic (Code/Zap/Wand2/Activity/Home/Coffee/BookOpen/ShoppingCart/Brain/Globe, 30px size, strokeWidth 1.25); ITEMS_VI + ITEMS_EN arrays.
+- **`src/components/sections/Hero.tsx`, `PillarsIntro.tsx`, `FinalCta.tsx`, `IndustriesBand.tsx`** — Applied `.luxury-heading` class to all main h2/display headings for gold gradient effect.
+- **`src/components/layout/Header.tsx`** — Glass buttons with Phone/LogIn icons (3.5px), RealtimeClock gold gradient text.
+- **`.git/` initialization** — Created git repository in sabo-mt-website directory (was missing .git before); committed all changes with comprehensive message.
+- **GitHub repository** — Created public repo `longsangsabo2025/sabo-mt-website` and pushed main branch; 173 files, 28754 insertions.
+
+### Verification
+- `npx tsc --noEmit` ✅
+- `npm run build` ✅
+- `npm run design-check` ✅
+- **GitHub**: https://github.com/longsangsabo2025/sabo-mt-website (commit 1776009, pushed 2026-05-04T06:14:22Z)
+
+### Pending
+- ⏳ Light mode hero video visibility — may need re-tune if video source brightness differs
+- ⏳ Icon/text ratio in marquee on mobile viewports (test on iPhone 13/14/15)
+
+---
+
 ## Session 83 — 2026-05-04 (Kéo khối chữ Hero lên vùng video)
 
 **Trigger:** User báo line “I • STUDIO GIẢI PHÁP AI TÙY CHỈNH” vẫn nằm dưới vùng background video.
