@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1500">
+  <rect width="1200" height="1500" fill="#000"/>
+  <line x1="80" y1="0" x2="80" y2="1500" stroke="#fff" stroke-opacity="0.12" stroke-width="1"/>
+  <text x="110" y="80" fill="#fff" fill-opacity="0.7" font-family="monospace" font-size="18" letter-spacing="0.2em">CASE / 02</text>
+  <text x="600" y="800" fill="#fff" font-family="serif" font-style="italic" font-size="170" text-anchor="middle">Realty Hub</text>
+  <text x="80" y="1450" fill="#fff" fill-opacity="0.5" font-family="monospace" font-size="14" letter-spacing="0.2em">REAL ESTATE · 2025</text>
+</svg>

@@ -1,0 +1,110 @@
+# ============================================================
+# AGENT TASK REGISTRY — sabo-mt-website
+# ============================================================
+# MOI agent PHAI doc file nay TRUOC khi bat dau task
+# MOI agent PHAI cap nhat file nay SAU khi hoan thanh task
+# ============================================================
+
+last_updated: "2026-05-01T10:00:00Z"
+updated_by: "claude-sonnet-4.5 (sf-dev)"
+
+# --- ACTIVE TASKS ---
+# Agent dang lam viec. Agent khac check truoc khi bat dau.
+active_tasks: []
+
+# --- BLOCKED TASKS ---
+blocked_tasks: []
+
+# --- TASK QUEUE ---
+task_queue: []
+
+# --- COMPLETED TASKS ---
+completed_tasks:
+
+  - id: "task-005"
+    title: "sf-dev: Refactor Groq chat widget to 24/7 sales agent with SABO context"
+    agent: "claude-sonnet-4.5"
+    status: "completed"
+    started: "2026-05-01"
+    completed: "2026-05-01"
+    files_touched:
+      - "src/lib/chat-context.ts"
+      - "src/app/api/chat/route.ts"
+      - "src/components/ui/ChatWidget.tsx"
+      - ".soloforge/AGENT_TASK_REGISTRY.yaml"
+    summary: "Refactored Groq chat widget from generic AI chat to sales agent with full SABO services context. (1) Created chat-context.ts builder with 3 pillars knowledge from site.ts, sales positioning rules, lead intent detection. (2) Updated API route: rate limit 20 msg/hour (was 20/min), temperature 0.5 (was 0.7), system prompt injection. (3) Updated ChatWidget: localStorage persistence (max 20 msg), lead intent detection → auto-show contact CTA card with link to /contact, improved header copy 'Trợ lý SABO 24/7', panel height 560px (was 520px). Verified: tsc ✅, design-check ✅, build ✅ no errors."
+
+# --- BLOCKED TASKS ---
+blocked_tasks: []
+
+# --- TASK QUEUE ---
+task_queue: []
+
+# --- COMPLETED TASKS ---
+completed_tasks:
+
+  - id: "task-004"
+    title: "sf-geo: Complete 3 pending GEO tasks (EN parity + dynamic schemas + breadcrumbs)"
+    agent: "claude-sonnet-4.5"
+    status: "completed"
+    started: "2026-04-30"
+    completed: "2026-04-30"
+    files_touched:
+      - "src/app/en/contact/page.tsx"
+      - "src/app/services/[slug]/page.tsx"
+      - "src/app/case-studies/[slug]/page.tsx"
+      - "DEVLOG.md"
+      - ".soloforge/AGENT_TASK_REGISTRY.yaml"
+    summary: "Completed all 3 pending GEO items from Session 33: (1) EN pages GEO parity — added LocalBusiness to en/contact, (2) Dynamic routes schemas — added per-slug FAQPage to services/[slug] with service-specific Q&A (2 per slug for build/automate/create), Article schema to case-studies/[slug], (3) BreadcrumbList navigation for both dynamic routes. All 6 GEO pillars now implemented across VI + EN. 40/40 pages build successfully."
+
+  - id: "task-003"
+    title: "sf-geo: GEO optimization for AI engines"
+    agent: "claude-haiku-4.5"
+    status: "completed"
+    started: "2026-04-30"
+    completed: "2026-04-30"
+    files_touched:
+      - "src/app/layout.tsx"
+      - "src/app/services/page.tsx"
+      - "src/app/page.tsx"
+      - "src/app/about/page.tsx"
+      - "src/app/contact/page.tsx"
+      - "DEVLOG.md"
+      - ".soloforge/AGENT_TASK_REGISTRY.yaml"
+    summary: "Enhanced Organization JSON-LD (knowsAbout, hasOfferCatalog, areaServed). Added FAQPage schema to services, LocalBusiness to contact. Added answer-ready blocks (homepage, services) and statistics (about). 5/6 GEO pillars implemented. Primary topics: AI automation SME VN, custom software VN, AI media production."
+
+  - id: "task-002"
+    title: "sf-seo: Complete metadata + sitemap optimization"
+    agent: "claude-haiku-4.5"
+    status: "completed"
+    started: "2026-04-30"
+    completed: "2026-04-30"
+    files_touched:
+      - "src/app/page.tsx"
+      - "src/app/about/page.tsx"
+      - "src/app/services/page.tsx"
+      - "src/app/industries/page.tsx"
+      - "src/app/case-studies/page.tsx"
+      - "src/app/contact/page.tsx"
+      - "src/app/layout.tsx"
+      - "src/app/sitemap.ts"
+      - "DEVLOG.md"
+    summary: "Added homepage metadata, upgraded all key page metadata to full spec (description + openGraph + canonical + language alternates). Enhanced sitemap with priority + changeFrequency. Primary keywords: xây dựng ứng dụng, tự động hóa AI, sản xuất video AI, custom software development Vietnam."
+
+  - id: "task-001"
+    title: "Init agent fleet cho sabo-mt-website"
+    agent: "claude-sonnet"
+    status: "completed"
+    started: "2026-04-30"
+    completed: "2026-04-30"
+    files_touched:
+      - ".claude/agents/_common.md"
+      - ".claude/agents/sf-dev.md"
+      - ".claude/agents/sf-linter.md"
+      - ".claude/agents/sf-debugger.md"
+      - ".claude/agents/sf-content.md"
+      - ".claude/agents/sf-seo.md"
+      - ".claude/agents/sf-git.md"
+      - ".claude/settings.json"
+      - ".soloforge/AGENT_TASK_REGISTRY.yaml"
+    summary: "Khởi tạo đầy đủ agent fleet cho sabo-mt-website theo pattern của sabo-hub"

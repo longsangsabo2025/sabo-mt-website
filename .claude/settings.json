@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx tsc --noEmit:*)",
+      "Bash(npx biome:*)",
+      "Bash(npx gitnexus:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git show:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(curl -I:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(vercel --prod:*)",
+      "Read(./.env)",
+      "Read(./.env.local)"
+    ],
+    "additionalDirectories": [
+      "d:\\0.PROJECTS\\02-SABO-ECOSYSTEM\\sabo-mt-website\\.claude\\agents"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(echo \"$CLAUDE_FILE_PATHS\" | tr \" \" \"\\n\" | grep -E \"\\.(tsx|ts)$\" | grep -v \"\\.d\\.ts$\" | head -1); if [ -n \"$FILE\" ] && [ -f \"$FILE\" ]; then echo \"→ tsc check: $FILE\"; npx tsc --noEmit 2>&1 | grep -E \"error TS\" | head -5; fi'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'CHANGED=$(git -C \"d:/0.PROJECTS/02-SABO-ECOSYSTEM/sabo-mt-website\" diff --name-only HEAD 2>/dev/null | grep -E \"\\.(tsx|ts|css|json)$\" | head -5); if [ -n \"$CHANGED\" ]; then echo \"⚠️  REMINDER: bạn đã edit files — cập nhật DEVLOG.md (Session N+1, prepend) trước khi kết thúc session.\"; echo \"Files changed: $CHANGED\"; fi'"
+          }
+        ]
+      }
+    ]
+  }
+}

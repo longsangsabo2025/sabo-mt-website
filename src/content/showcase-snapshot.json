@@ -1,0 +1,343 @@
+{
+  "_meta": {
+    "source": "sabo-arena: direct from agent (public/showcase.json v1.0, 2026-04-29) | sabohub: SHOWCASE_JSON_SPEC.md v1.0, 2026-04-30 | vungtauland/ainewbievn: forge migrations",
+    "syncedAt": "2026-04-30",
+    "note": "Fallback snapshot used when forge live API is unavailable. Auto-updated when /api/revalidate is called by forge admin webhook."
+  },
+  "showcases": [
+    {
+      "slug": "sabo-arena",
+      "name": "SABO Arena",
+      "description": "Nền tảng pool billiards (bida lỗ) đầu tiên tại Việt Nam — quản lý giải đấu, xếp hạng ELO theo từng môn, hệ thống loyalty câu lạc bộ và thách đấu 1v1 realtime trên iOS + Android.",
+      "category": "Mobile App",
+      "status": "live",
+      "progress": 95,
+      "production_url": "https://saboarena.com",
+      "github_url": null,
+      "hero_title": "Nền tảng giải đấu và xếp hạng bida lỗ cho cộng đồng Việt Nam",
+      "hero_description": "SABO Arena kết nối cộng đồng pool billiards Việt Nam trên một nền tảng duy nhất — từ tổ chức giải đấu với bracket tự động, xếp hạng ELO riêng biệt cho 8-ball / 9-ball / 10-ball, đến hệ thống loyalty tích điểm SPA tại câu lạc bộ. Flutter native trên iOS và Android, backend Supabase Realtime chạy tại Singapore.",
+      "hero_stats": [
+        { "label": "APP VERSION", "value": "1.3.2" },
+        { "label": "PLATFORMS", "value": "iOS + Android" },
+        { "label": "RATING", "value": null }
+      ],
+      "overview_description": "Pool billiards Việt Nam vận hành bằng giấy tờ và tin nhắn — không có hạ tầng số chung cho giải đấu, xếp hạng hay kết nối câu lạc bộ với người chơi. SABO Arena giải quyết toàn bộ vòng đời đó trong một ứng dụng Flutter: tournament engine với bracket tự động, hệ thống ELO độc lập cho 3 môn (8-ball, 9-ball, 10-ball), matchmaking thách đấu 1v1 theo địa điểm và ELO, club dashboard với quản lý hội viên và loyalty QR. Backend dùng Supabase Postgres với RLS granular, Realtime subscriptions, atomic transactions cho SPA points và Edge Functions — deploy Singapore cho latency thấp trong khu vực Đông Nam Á.",
+      "objectives": [
+        "Số hoá hoàn toàn quy trình tổ chức giải đấu bida lỗ — đăng ký, bracket, scoring, kết quả không cần giấy tờ",
+        "Xây dựng hệ thống xếp hạng ELO minh bạch, tách biệt cho 8-ball / 9-ball / 10-ball với audit trail đầy đủ",
+        "Tạo vòng tròn loyalty khép kín cho câu lạc bộ: tích điểm SPA qua QR + hoá đơn, đổi thưởng và voucher giải đấu"
+      ],
+      "impacts": [
+        "Giải đấu được tổ chức và kết thúc hoàn toàn trong app — từ đăng ký đến bracket đến phát thưởng SPA",
+        "Race condition SPA đã giải quyết bằng atomic PostgreSQL function — 43 users, 219 transactions được restore chính xác",
+        "Image loading nhanh hơn 60% (500ms → 200ms), list scrolling đạt 60 FPS nhờ OptimizedImage + OptimizedListView"
+      ],
+      "features": [
+        {
+          "title": "Tournament Engine",
+          "points": [
+            "Tạo giải đấu với bracket tự động: single-elimination, round-robin",
+            "Đăng ký người chơi, thu phí VNPay / MoMo / tiền mặt / chuyển khoản với webhook xác nhận tự động",
+            "Scoring và bracket cập nhật realtime qua Supabase Realtime, push notification qua Firebase"
+          ]
+        },
+        {
+          "title": "ELO Rankings",
+          "points": [
+            "3 hệ thống ELO độc lập: 8-ball, 9-ball, 10-ball — không gộp chung",
+            "Rank registration flow với xét duyệt video và phân hạng ban đầu",
+            "Bảng xếp hạng live, lịch sử trận đấu per player với win/loss stats"
+          ]
+        },
+        {
+          "title": "Matchmaking & Challenges",
+          "points": [
+            "Thách đấu 1v1 trực tiếp, gợi ý đối thủ theo ELO tương đương",
+            "Giao lưu theo địa điểm: tìm đối thủ tại câu lạc bộ gần nhất",
+            "Lịch sử thách đấu, thống kê thắng/thua, QR code profile để kết nối nhanh"
+          ]
+        },
+        {
+          "title": "Club Management",
+          "points": [
+            "Club dashboard: quản lý hội viên (Members Hub), staff roles (owner / admin / staff), báo cáo",
+            "Loyalty config: điểm tích SPA per VND, tỷ lệ đổi thưởng, voucher giải đấu",
+            "Approval workflow cho voucher payment (pending → approved/rejected) với notification realtime"
+          ]
+        },
+        {
+          "title": "Club Loyalty — QR + Bill",
+          "points": [
+            "Staff quét QR khách → nhập hoá đơn → hệ thống tự tính điểm SPA theo tỷ lệ câu lạc bộ cấu hình",
+            "RPC award_points_from_bill atomic với rate-limit 30s, validate hoá đơn 1K–50M VND",
+            "Khách xem ví SPA, lịch sử tích điểm, đổi thưởng và voucher trong My Loyalty Hub"
+          ]
+        },
+        {
+          "title": "Highlight Video",
+          "points": [
+            "Upload video highlight với pipeline: compress → thumbnail JPEG 720w → upload → review",
+            "Quota per role, owner duyệt video với realtime badge đếm số video chờ duyệt",
+            "Thumbnail tự động sinh từ frame video, không cần user chọn thủ công"
+          ]
+        }
+      ],
+      "metrics": [
+        { "label": "ACTIVE USERS", "value": null },
+        { "label": "TOURNAMENTS RUN", "value": null },
+        { "label": "REGISTERED CLUBS", "value": null }
+      ],
+      "tech_stack": [
+        "Flutter >=3.29.2",
+        "Dart >=3.3.0",
+        "Supabase Flutter SDK ^2.10.3",
+        "Firebase Cloud Messaging",
+        "Google Sign-In + Facebook Auth + Apple Sign-In",
+        "VNPay + MoMo",
+        "Sentry",
+        "Codemagic CI/CD",
+        "Next.js 16.1 + React 19 (website)",
+        "Vercel (sin1)"
+      ],
+      "performance": [
+        { "label": "Image Loading", "value": "200ms (−60%)" },
+        { "label": "List Scrolling", "value": "60 FPS" },
+        { "label": "SPA Transactions", "value": "Atomic (ACID)" },
+        { "label": "Backend Region", "value": "Singapore" }
+      ],
+      "infrastructure": [
+        { "label": "Database", "value": "Supabase Postgres (Singapore)" },
+        { "label": "Auth", "value": "Supabase Auth (Google / Facebook / Apple)" },
+        { "label": "Push Notifications", "value": "Firebase Cloud Messaging" },
+        { "label": "Payments", "value": "VNPay + MoMo (webhook IPN)" },
+        { "label": "Error Tracking", "value": "Sentry" },
+        { "label": "App CI/CD", "value": "Codemagic" },
+        { "label": "Website Deploy", "value": "Vercel (sin1)" }
+      ],
+      "industry": "Sports & Gaming",
+      "industry_slug": "sports",
+      "is_featured": true,
+      "display_order": 1
+    },
+    {
+      "slug": "sabohub",
+      "name": "SaboHub",
+      "description": "Nền tảng quản lý doanh nghiệp đa ngành — phân phối B2B, giải trí F&B, sản xuất. Web app + mobile app (iOS/Android), phân quyền 9 vai trò.",
+      "category": "Business Management Platform",
+      "status": "live",
+      "progress": 75,
+      "production_url": "https://hub.saboarena.com",
+      "github_url": null,
+      "hero_title": "Quản lý toàn diện từ CEO đến vận hành thực địa",
+      "hero_description": "SaboHub thống nhất 3 mô hình kinh doanh (phân phối B2B, giải trí F&B, sản xuất) trên 2 platform: web app (React) tại hub.saboarena.com và mobile app (Flutter) cho iOS/Android. Phân quyền 9 vai trò — mỗi user sau khi đăng nhập được điều hướng tự động đến giao diện đúng với vai trò. Sắp tích hợp SSO vào sabo.com.vn.",
+      "hero_stats": [
+        { "label": "ROLES", "value": "9 vai trò" },
+        { "label": "BUSINESS TYPES", "value": "7 loại hình" },
+        { "label": "PLATFORM", "value": "Web + Mobile" }
+      ],
+      "overview_description": "Nhiều doanh nghiệp phải vận hành 3-4 phần mềm riêng biệt cho phân phối, F&B và sản xuất — dữ liệu phân tán, quy trình không nhất quán. SaboHub giải quyết bằng 2 platform dùng chung 1 backend Supabase: web app (React) tại hub.saboarena.com cho PC và mobile app (Flutter) trên iOS/Android cho staff ngoài thực địa. User đăng nhập bằng tài khoản công ty → hệ thống tự động điều hướng đến giao diện đúng vai trò: CEO thấy dashboard đa công ty, Manager thấy orders và tồn kho, Driver thấy danh sách giao hàng hôm nay, Finance thấy công nợ aging. Dữ liệu giữa các công ty được cách ly hoàn toàn qua Row-Level Security ở tầng database. Roadmap: tích hợp SSO vào sabo.com.vn.",
+      "objectives": [
+        "Thống nhất quản lý 3 mô hình kinh doanh (phân phối B2B, giải trí F&B, sản xuất) trên một nền tảng duy nhất, cách ly dữ liệu đa công ty qua Row-Level Security.",
+        "Xây dựng hệ thống phân quyền role-based linh hoạt cho 9 vai trò, mỗi vai trò có giao diện và quyền truy cập riêng biệt, không cần training phức tạp.",
+        "Tích hợp AI assistant (Gemini), gamification quest/leaderboard, và SABO Token blockchain để tạo hệ thống engagement và reward nội bộ có thể đo lường."
+      ],
+      "impacts": [
+        "Một hệ thống thay thế hoàn toàn các phần mềm rời rạc: order management, delivery tracking, inventory, F&B session, receivables aging đều trong cùng một nền tảng.",
+        "Driver flow hoàn chỉnh end-to-end: từ packing (warehouse) → giao hàng GPS → xác nhận thanh toán → tự động cập nhật công nợ khách hàng.",
+        "CEO quản lý nhiều công ty cùng lúc trên một giao diện duy nhất, dữ liệu mỗi công ty hoàn toàn cách ly."
+      ],
+      "features": [
+        {
+          "title": "Distribution Management",
+          "points": [
+            "B2B sales orders với discount, approval flow và delivery status tracking",
+            "Customer management: credit limit, công nợ aging (current/1-30/31-60/61-90/90+), GPS, tier (bronze/silver/gold/diamond)",
+            "GPS-based journey planning cho sales: lộ trình tối ưu, check-in khách hàng, visit activity",
+            "Driver portal: danh sách giao hàng, xác nhận thanh toán (cash/transfer/debt), tự động cập nhật công nợ",
+            "Receivables management: aging analysis, ghi nhận thanh toán, write-off"
+          ]
+        },
+        {
+          "title": "Entertainment & F&B",
+          "points": [
+            "Table session management cho billiards/restaurant/hotel/cafe: start/pause/end, tính tiền theo giờ",
+            "Menu management CRUD, reservation/booking system, shift scheduling",
+            "Daily cashflow import, monthly P&L tracking, OCR invoice scanning",
+            "Staff daily reports, shift leader review, manager approval workflow"
+          ]
+        },
+        {
+          "title": "Manufacturing",
+          "points": [
+            "Bill of Materials (BOM), production orders, material tracking",
+            "Quality inspection (QC) với workflow approve/reject",
+            "Supplier management, purchase orders, payables tracking"
+          ]
+        },
+        {
+          "title": "AI & CEO Analytics",
+          "points": [
+            "AI assistant (Gemini-powered) — company AI riêng cho từng doanh nghiệp",
+            "CEO multi-company dashboard: revenue, KPI, attendance, analytics cross-company",
+            "PDF report generation, KanBan task board, commission rules"
+          ]
+        },
+        {
+          "title": "Gamification & SABO Token",
+          "points": [
+            "Quest system: daily/weekly quests, XP rewards, season pass, leaderboard",
+            "UyTin store — internal reward shop cho nhân viên",
+            "SABO Token wallet trên Base Sepolia: earn, spend, transfer, NFT achievements"
+          ]
+        }
+      ],
+      "metrics": [
+        { "label": "Business Roles", "value": "9 vai trò" },
+        { "label": "Business Types", "value": "7 loại hình" },
+        { "label": "Monthly Active Users", "value": null }
+      ],
+      "tech_stack": [
+        "React 18.3 + TypeScript + Vite (Web)",
+        "Flutter 3.5 + Dart 3.5 (Mobile iOS/Android)",
+        "Supabase 2.x (PostgreSQL + Auth + Storage + Realtime)",
+        "TanStack Query 5",
+        "Radix UI + shadcn/ui + Tailwind CSS",
+        "Riverpod 3.x (Flutter state management)",
+        "Framer Motion",
+        "Leaflet + flutter_map (OpenStreetMap)",
+        "Sentry (Web + Mobile)",
+        "Gemini AI",
+        "Base Sepolia (SABO Token blockchain)"
+      ],
+      "performance": [
+        { "label": "Web", "value": "hub.saboarena.com (Vercel CDN)" },
+        { "label": "Mobile", "value": "iOS + Android (Flutter)" }
+      ],
+      "infrastructure": [
+        { "label": "Database", "value": "Supabase PostgreSQL (ap-southeast-2)" },
+        { "label": "Auth", "value": "Custom RPC employee_login + Supabase Auth (CEO)" },
+        { "label": "Hosting", "value": "Vercel" },
+        { "label": "Error Tracking", "value": "Sentry" },
+        { "label": "Push Notifications", "value": "Firebase Cloud Messaging" },
+        { "label": "Blockchain", "value": "Base Sepolia Testnet — 4 contracts" }
+      ],
+      "industry": "Hospitality & Services",
+      "industry_slug": "hospitality",
+      "is_featured": true,
+      "display_order": 2
+    },
+    {
+      "slug": "vungtauland",
+      "name": "Vũng Tàu Dream Homes",
+      "description": "Nền tảng bất động sản Vũng Tàu — Tìm kiếm, đăng tin và quản lý bất động sản với giao diện hiện đại",
+      "category": "Real Estate Platform",
+      "status": "live",
+      "progress": 92,
+      "production_url": "https://vungtauland.vercel.app",
+      "github_url": null,
+      "hero_title": "VŨNG TÀU DREAM HOMES",
+      "hero_description": "Nền tảng bất động sản hiện đại cho thành phố biển Vũng Tàu. Tìm kiếm thông minh, đăng tin dễ dàng, quản lý chuyên nghiệp — tất cả trong một ứng dụng.",
+      "hero_stats": [
+        { "label": "Bất Động Sản", "value": "200+" },
+        { "label": "Người Dùng", "value": "500+" },
+        { "label": "Khu Vực", "value": "15+" }
+      ],
+      "overview_description": "Vũng Tàu Dream Homes là nền tảng bất động sản được xây dựng dành riêng cho thị trường Vũng Tàu. Với giao diện hiện đại, hệ thống tìm kiếm thông minh và quy trình đăng tin đơn giản, ứng dụng giúp kết nối người mua/thuê với chủ sở hữu một cách hiệu quả nhất.",
+      "objectives": [
+        "Xây dựng nền tảng bất động sản hiện đại cho thị trường Vũng Tàu",
+        "Hệ thống tìm kiếm và lọc thông minh theo nhiều tiêu chí",
+        "Giao diện responsive tối ưu cho mọi thiết bị",
+        "Tích hợp xác thực và quản lý người dùng an toàn"
+      ],
+      "impacts": [
+        "200+ bất động sản được đăng tải trên nền tảng",
+        "500+ người dùng đã đăng ký và sử dụng",
+        "Giảm thời gian tìm kiếm BĐS cho người dùng",
+        "Tăng khả năng tiếp cận khách hàng cho người bán/cho thuê"
+      ],
+      "features": [
+        { "title": "Tìm Kiếm Thông Minh", "points": ["Lọc theo loại BĐS, khu vực, giá, diện tích", "Lọc theo trạng thái: Bán, Cho thuê", "Sắp xếp theo nhiều tiêu chí"] },
+        { "title": "Đăng Tin Dễ Dàng", "points": ["Form đăng tin trực quan với validation", "Upload nhiều hình ảnh chất lượng cao", "Mô tả chi tiết với rich text"] },
+        { "title": "User Dashboard", "points": ["Quản lý tin đăng cá nhân", "Theo dõi lượt xem và tương tác", "Lịch sử hoạt động"] },
+        { "title": "Admin Panel", "points": ["Duyệt và quản lý tin đăng", "Quản lý người dùng", "Thống kê và báo cáo"] }
+      ],
+      "metrics": [
+        { "label": "Bất Động Sản", "value": "200+" },
+        { "label": "Người Dùng", "value": "500+" },
+        { "label": "Khu Vực", "value": "15+" },
+        { "label": "Uptime", "value": "99.9%" }
+      ],
+      "tech_stack": ["React 18", "TypeScript", "Vite 7", "Tailwind CSS", "Shadcn/ui", "Supabase", "PostgreSQL", "TanStack Query", "Vitest", "Sentry"],
+      "performance": [
+        { "label": "Build Time", "value": "2.31s" },
+        { "label": "Bundle Size", "value": "806 KB" },
+        { "label": "Test Coverage", "value": "50%+" },
+        { "label": "Lighthouse Score", "value": "95+" }
+      ],
+      "infrastructure": [
+        { "label": "Hosting", "value": "Vercel Edge" },
+        { "label": "Database", "value": "Supabase PostgreSQL" },
+        { "label": "Auth", "value": "Supabase Auth" },
+        { "label": "Monitoring", "value": "Sentry + GA4" }
+      ],
+      "industry": "Real Estate",
+      "industry_slug": "real-estate",
+      "is_featured": true,
+      "display_order": 4
+    },
+    {
+      "slug": "ainewbievn",
+      "name": "AINewbieVN",
+      "description": "Cộng đồng AI & Workflow tự động hóa",
+      "category": "Community Platform",
+      "status": "live",
+      "progress": 95,
+      "production_url": "https://www.ainewbievn.shop",
+      "github_url": null,
+      "hero_title": "AINEWBIEVN",
+      "hero_description": "Nền tảng sản phẩm số AI, workflow tự động hóa, và kết nối nhân tài công nghệ cho người Việt.",
+      "hero_stats": [
+        { "label": "Thành Viên", "value": "500+" },
+        { "label": "Workflows", "value": "50+" },
+        { "label": "Dự Án", "value": "10+" }
+      ],
+      "overview_description": "AINewbieVN là nền tảng kết nối và phát triển cộng đồng AI tại Việt Nam, cung cấp workflow tự động hóa, sản phẩm AI, và networking cho cộng đồng thành viên công nghệ.",
+      "objectives": [
+        "Xây dựng cộng đồng AI cho người Việt",
+        "Cung cấp workflows tự động hóa",
+        "Kết nối dự án AI và nhân tài công nghệ",
+        "Đào tạo và phát triển kỹ năng AI"
+      ],
+      "impacts": [
+        "500+ thành viên tham gia cộng đồng",
+        "50+ workflows giúp tiết kiệm thời gian",
+        "10+ dự án AI đang phát triển",
+        "Tăng nhận thức về AI trong cộng đồng VN"
+      ],
+      "features": [
+        { "title": "AI Technology Platform", "points": ["Workflow automation với AI", "AI product marketplace", "Community-driven learning"] },
+        { "title": "Talent Network", "points": ["Kết nối AI developers", "Job board cho AI positions", "Mentorship programs"] }
+      ],
+      "metrics": [
+        { "label": "Thành Viên", "value": "500+" },
+        { "label": "Workflows", "value": "50+" },
+        { "label": "Dự Án", "value": "10+" }
+      ],
+      "tech_stack": ["React 18", "TypeScript", "Tailwind CSS"],
+      "performance": [
+        { "label": "Page Load", "value": "0.8s" },
+        { "label": "First Paint", "value": "1.2s" },
+        { "label": "Bundle Size", "value": "245 KB" }
+      ],
+      "infrastructure": [
+        { "label": "Hosting", "value": "Vercel Edge" },
+        { "label": "CDN", "value": "Vercel CDN" },
+        { "label": "Deploy", "value": "Auto on Push" }
+      ],
+      "industry": "Community / AI",
+      "industry_slug": "community",
+      "is_featured": true,
+      "display_order": 3
+    }
+  ]
+}
